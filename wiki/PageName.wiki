@@ -1,3 +1,3 @@
 = Resources =
  * [http://aaa-sec.com/eid2/sigsupport/ Specifications, guides, schemas and more]
- * [https://eid2cssp.3xasecurity.com/login/ Implementation]
+ * [https://eid2cssp.3xasecurity.com/login/ Implementation] (Swedish eID 2.0 test infrastructure)
