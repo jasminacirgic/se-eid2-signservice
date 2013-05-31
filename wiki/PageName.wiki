@@ -1,0 +1,2 @@
+= Resources =
+ * [http://aaa-sec.com/eid2/sigsupport/ Specifications, guides, schemas and more]
