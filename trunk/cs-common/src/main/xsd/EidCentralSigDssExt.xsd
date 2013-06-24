@@ -10,12 +10,16 @@
         schemaLocation="saml-schema-assertion-2.0.xsd"/>
     <xs:element name="SignRequestExtension" type="eid2:SignRequestExtensionType">
         <xs:annotation>
-            <xs:documentation>Extension to an OASIS DSS SignRequest, providing additional information about a sign request. This element extends the dss:OptionalInputs element of a dss:SignRequest.</xs:documentation>
+            <xs:documentation>Extension to an OASIS DSS SignRequest, providing additional 
+information about a sign request. This element extends the 
+dss:OptionalInputs element of a dss:SignRequest.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="SignResponseExtension" type="eid2:SignResponseExtensionType">
         <xs:annotation>
-            <xs:documentation>Extension to an OASIS DSS SignResponse, providing additional information about a sign response. This element extends the dss:OptionalOutput element of a dss:SignResponse.</xs:documentation>
+            <xs:documentation>Extension to an OASIS DSS SignResponse, providing additional information 
+about a sign response. This element extends the dss:OptionalOutput element 
+of a dss:SignResponse.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="SignTasks" type="eid2:SignTasksType"/>
@@ -27,43 +31,57 @@
     </xs:element>
     <xs:element name="Signer" type="saml:AttributeStatementType">
         <xs:annotation>
-            <xs:documentation>The identity of the signer expressed as a sequence of SAML attributes using the AttributesType complex type.</xs:documentation>
+            <xs:documentation>The identity of the signer expressed as a sequence of SAML attributes 
+using the AttributesType complex type.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="IdentityProvider" type="saml:NameIDType">
         <xs:annotation>
-            <xs:documentation>The SAML EntityID of the Identity Provider that MUST be used to authenticate the signer before signing. The EntitID value is specified using the saml:NameIDType complex type and MUST include a Format attribute with the value urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
+            <xs:documentation>The SAML EntityID of the Identity Provider that MUST be used to 
+authenticate the signer before signing. The EntitID value is specified 
+using the saml:NameIDType complex type and MUST include a Format 
+attribute with the value urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="SignRequester" type="saml:NameIDType">
         <xs:annotation>
-            <xs:documentation>The SAML EntityID of the service that sends this request to the signing service. The EntityID value is specified using the saml:NameIDType complex type and MUST include a Format attribute with the value urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
+            <xs:documentation>The SAML EntityID of the service that sends this request to the signing service. 
+The EntityID value is specified using the saml:NameIDType complex type and MUST 
+include a Format attribute with the value 
+urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="SignService" type="saml:NameIDType">
         <xs:annotation>
-            <xs:documentation>The SAML EntityID of the service to which this Sign Request is sent. The EntityID value is specified using the saml:NameIDType complex type and MUST include a Format attribute with the value urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
+            <xs:documentation>The SAML EntityID of the service to which this Sign Request is sent. 
+The EntityID value is specified using the saml:NameIDType complex type 
+and MUST include a Format attribute with the value 
+urn:oasis:names:tc:SAML:2.0:nameid-format:entity.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="RequestedSignatureAlgorithm" type="xs:anyURI">
         <xs:annotation>
-            <xs:documentation>An identifier of the signature algorithm the requesting service prefers when generating the requested signature.</xs:documentation>
+            <xs:documentation>An identifier of the signature algorithm the requesting service prefers 
+when generating the requested signature.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="CertRequestProperties" type="eid2:CertRequestPropertiesType">
         <xs:annotation>
-            <xs:documentation>The requested properties of the signature certificate being issued by the signature service.</xs:documentation>
+            <xs:documentation>The requested properties of the signature certificate being issued by the 
+signature service.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="RequestedCertAttributes" type="eid2:RequestedAttributesType">
         <xs:annotation>
-            <xs:documentation>An optional set of requested attributes that the requesting service prefers or requires in the subject name of the generated signing certificate.</xs:documentation>
+            <xs:documentation>An optional set of requested attributes that the requesting service prefers 
+or requires in the subject name of the generated signing certificate.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="OtherProperties" type="eid2:AnyType"/>
     <xs:element name="SignMessage" type="xs:base64Binary">
         <xs:annotation>
-            <xs:documentation>A Base64 encoded string that provides a html encoded message to the signer. The encoded string MUST be encoded using UTF-8 character encoding.</xs:documentation>
+            <xs:documentation>A Base64 encoded string that provides a html encoded message to the signer. 
+The encoded string MUST be encoded using UTF-8 character encoding.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="OtherRequestInfo" type="eid2:AnyType">
@@ -78,19 +96,30 @@
     </xs:element>
     <xs:element name="Request" type="xs:base64Binary">
         <xs:annotation>
-            <xs:documentation>An element of type EncodedRequestType with base64Binary base type, holding a representation of a complete and signed dss:SignRequest element that is related to this sign response. This element MUST be present if signing was successful.</xs:documentation>
+            <xs:documentation>An element of type EncodedRequestType with base64Binary base type, holding 
+a representation of a complete and signed dss:SignRequest element that is 
+related to this sign response. This element MUST be present if signing was 
+successful.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="SignerAssertionInfo" type="eid2:SignerAssertionInfoType">
         <xs:annotation>
-            <xs:documentation>An element of type SignerAssertionInfoType holding information about how the signer was authenticated by the sign service as well as information about subject attribute values present in the SAML assertion authenticating the signer, which was incorporated into the signer certificate. This element MUST be present if signing was successful.</xs:documentation>
+            <xs:documentation>An element of type SignerAssertionInfoType holding information about how 
+the signer was authenticated by the sign service as well as information 
+about subject attribute values present in the SAML assertion authenticating 
+the signer, which was incorporated into the signer certificate. This element 
+MUST be present if signing was successful.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="ContextInfo" type="eid2:ContextInfoType"/>
     <xs:element name="SamlAssertions" type="eid2:SAMLAssertionsType"/>
     <xs:element name="SignatureCertificateChain" type="eid2:CertificateChainType">
         <xs:annotation>
-            <xs:documentation>An element of type CertificateChainType holding the signer certificate as well as other certificates that may be used to validate the signature. This element MUST be present if signing was successful and MUST contain all certificate that are necessary to compile a complete and functional signed document.</xs:documentation>
+            <xs:documentation>An element of type CertificateChainType holding the signer certificate as 
+well as other certificates that may be used to validate the signature. This 
+element MUST be present if signing was successful and MUST contain all 
+certificate that are necessary to compile a complete and functional signed 
+document.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="OtherResponseInfo" type="eid2:AnyType">
@@ -100,7 +129,9 @@
     </xs:element>
     <xs:element name="ToBeSignedBytes" type="xs:base64Binary">
         <xs:annotation>
-            <xs:documentation>The octets that are hashed and signed when generating the signture. For PDF and common modes of CMS this is the DER encoded SignedAttrs field. For XML this is the canonicalized SignedInfo octets.</xs:documentation>
+            <xs:documentation>The octets that are hashed and signed when generating the signture. For 
+PDF and common modes of CMS this is the DER encoded SignedAttributess field. 
+For XML this is the canonicalized SignedInfo octets.</xs:documentation>
         </xs:annotation>
     </xs:element>
     <xs:element name="AdESObject" type="eid2:AdESObjectType">
@@ -119,9 +150,14 @@
             <xs:element ref="eid2:RequestTime"/>
             <xs:element ref="saml:Conditions">
                 <xs:annotation>
-                    <xs:documentation>Conditions that MUST be evaluated when assessing the validity of and/or when using the Sign Request. See Section 2.5 of [SAML2.0]for additional information on how to evaluate conditions.
+                    <xs:documentation>Conditions that MUST be evaluated when assessing the validity of and/or 
+when using the Sign Request. See Section 2.5 of [SAML2.0]for additional 
+information on how to evaluate conditions.
 
-This element MUST include the attributes NotBefore and NotOnOrAfter and MUST include the element saml:AudienceRestriction which in turn MUST contain one saml:Audience element, specifying the return URL for any resulting Sign Response message.</xs:documentation>
+This element MUST include the attributes NotBefore and NotOnOrAfter and 
+MUST include the element saml:AudienceRestriction which in turn MUST 
+contain one saml:Audience element, specifying the return URL for any 
+resulting Sign Response message.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element ref="eid2:Signer"/>
@@ -135,7 +171,9 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         </xs:sequence>
         <xs:attribute name="Version" type="xs:string" use="optional" default="1.0">
             <xs:annotation>
-                <xs:documentation>The version of this specification. If absent, the version value defaults to "1.0". This attribute provide means for the receiving service to determine the expected syntax of the response based on protocol version.</xs:documentation>
+                <xs:documentation>The version of this specification. If absent, the version value defaults to "1.0". 
+This attribute provide means for the receiving service to determine the 
+expected syntax of the response based on protocol version.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
@@ -149,7 +187,9 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         </xs:sequence>
         <xs:attribute name="Version" type="xs:string" default="1.0">
             <xs:annotation>
-                <xs:documentation>The version of this specification. If absent, the version value defaults to "1.0". This attribute provide means for the receiving service to determine the expected syntax of the response based on protocol version.</xs:documentation>
+                <xs:documentation>The version of this specification. If absent, the version value defaults to "1.0". 
+This attribute provide means for the receiving service to determine the 
+expected syntax of the response based on protocol version.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
@@ -216,12 +256,14 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         </xs:sequence>
         <xs:attribute name="SignTaskId" type="xs:string">
             <xs:annotation>
-                <xs:documentation>A distinguishing id of this sign task which is used to distinguish between multiple sign tasks in the same request</xs:documentation>
+                <xs:documentation>A distinguishing id of this sign task which is used to distinguish between 
+multiple sign tasks in the same request</xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="SigType" use="required">
             <xs:annotation>
-                <xs:documentation>Enumeration of the type of signature the canonical signed information is associated with.</xs:documentation>
+                <xs:documentation>Enumeration of the type of signature the canonical signed information is
+associated with.</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -234,7 +276,10 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         </xs:attribute>
         <xs:attribute default="None" name="AdESType">
             <xs:annotation>
-                <xs:documentation>Specifies the type of AdES signature. BES means that the signing certificate hash must be covered by the signature. EPES means that the signing certificate hash and a signature policy identifier must be covered by the signature.</xs:documentation>
+                <xs:documentation>Specifies the type of AdES signature. BES means that the signing certificate
+hash must be covered by the signature. EPES means that the signing 
+certificate hash and a signature policy identifier must be covered by 
+the signature.</xs:documentation>
             </xs:annotation>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
@@ -246,7 +291,8 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         </xs:attribute>
         <xs:attribute name="ProcessingRules" type="xs:anyURI" use="optional">
             <xs:annotation>
-                <xs:documentation>An identifier for processing rules that must be executed by the signature service when processing data in this element.</xs:documentation>
+                <xs:documentation>An identifier for processing rules that must be executed by the signature 
+service when processing data in this element.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
@@ -261,7 +307,8 @@ This element MUST include the attributes NotBefore and NotOnOrAfter and MUST inc
         <xs:sequence>
             <xs:element minOccurs="0" ref="saml:AuthnContextClassRef">
                 <xs:annotation>
-                    <xs:documentation>The a URI reference to the requested level of assurance with which the certificate subject should be authenticated.</xs:documentation>
+                    <xs:documentation>The a URI reference to the requested level of assurance with which the 
+certificate subject should be authenticated.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" ref="eid2:RequestedCertAttributes"/>
