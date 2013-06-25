@@ -81,7 +81,7 @@ function getDiscoUIComponents(){
     });
     
     // Add UI elements
-    $("#discoType").append("Central Anvisning").append(idpDiscoRadio).append("&nbsp;&nbsp;&nbsp;Integrerad Anvisning").append(intDiscoRadio);
+    $("#discoType").append("Central Discovery").append(idpDiscoRadio).append("&nbsp;&nbsp;&nbsp;Integrated Discovery").append(intDiscoRadio);
     $("#idpDiscoLoginButton").html(idpDiscoButton);
     
     updatedDiscoMode(intDisco);
