@@ -39,7 +39,7 @@
                     <div style="background-color: inherit">
                         <table style="background-color: inherit; width: 100%">
                             <tr style="background-color: inherit">
-                                <td><b>Logga in med Svensk e-legitimation</b>&nbsp;&nbsp;<span id="idpDiscoLoginButton"></span></td>
+                                <td><b>Login with Swedish test e-identification</b>&nbsp;&nbsp;<span id="idpDiscoLoginButton"></span></td>
                                 <td style="text-align: right" id="discoType"></td>
                             </tr>
                         </table>
@@ -53,22 +53,20 @@
                 <div style="margin-top: 10px;background-color: #f8f8f8">
                     <table id="refTable">
                         <tbody>
-                            <tr><td colspan="2"><u><Strong class="colored">Relaterade resurser och länkar</Strong></u></td></tr>
+                            <tr><td colspan="2"><u><Strong class="colored">Related links and resources</Strong></u></td></tr>
                         <tr><td><a href="https://eid2cssp.3xasecurity.com/login/index.jsp?idp=https://idp.test.eid2.se/idp/shibboleth">SSO login</a></td>
                             <td class="prop">via EID Testbädd Referens-IDP</td></tr>
-                        <tr><td><a href="xsddoc/EidCentralSig.html">XML Schema</a></td>
-                            <td class="prop">XML Schema för kommunikation med signeringstjänsten</td></tr>
-                        <tr><td><a href="https://eid2.3xasecurity.com/docs/DeploymentEid2.pdf">DeploymentEid2.pdf</a></td>
-                            <td class="prop">SAML Implementationsbeskrivning</td></tr>
+                        <tr><td><a href="http://aaa-sec.com/eid2/sigsupport">Documentation</a></td>
+                            <td class="prop">XML Schema, protocol specification, source link, etc</td></tr>
                         <tr><td><a href="https://docs.eid2.se/">docs.eid2.se</a></td>
-                            <td class="prop">information om testbädden för Eid 2.0</td></tr>
+                            <td class="prop">Wiki - Testbädden för Eid 2.0</td></tr>
                         <tr><td><a href="https://eid2cssp.3xasecurity.com/Shibboleth.sso/Session">SAML Session</a></td>
-                            <td class="prop">Status för pågående SAML session</td></tr>
+                            <td class="prop">Status for current SAML SP session</td></tr>
                         </tbody>
                     </table>            
                 </div>
                 <div style="margin-top: 10px;background-color: #ffffff">
-                    <p>Denna Webbtjänst är ansluten till testbädden för Eid 2.0 enligt föjande skiss:</p>
+                    <p>This service is deployed according to the following basic model:</p>
                     <a style="margin-left: 30px"class="image" href="https://eid2.3xasecurity.com/docs/DeploymentEid2.pdf"><img src="img/eid2SpService.png" width="600" alt="3xA Security"/></a>                
                 </div>
             </div>
