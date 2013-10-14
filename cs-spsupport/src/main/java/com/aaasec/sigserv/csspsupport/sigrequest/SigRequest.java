@@ -86,7 +86,7 @@ public class SigRequest implements Constants {
         SignRequestExtensionType eid2Request = sigRequest.addNewOptionalInputs().addNewSignRequestExtension();
 
 
-        sigRequest.setProfile(PROTOCOL_BINDING);
+        sigRequest.setProfile(PROTOCOL_PROFILE);
         sigRequest.setRequestID(session.getSignRequestID());
         eid2Request.setRequestTime(Calendar.getInstance());
         if (session.getSignMessage() != null && session.getSignMessage().length > 0) {

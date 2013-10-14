@@ -27,7 +27,8 @@ public interface Constants {
     public static final String LF = System.getProperty("line.separator");
     public static final String MAC_PATH = "/Library/Application Support/EidSigServer/";
     public static final String WIN_PATH = "C:/EidSigServer/";
-    public static final String PROTOCOL_BINDING = "http://id.elegnamnden.se/csig/1.0/eid2-dss/profile";
+    public static final String PROTOCOL_PROFILE = "http://id.elegnamnden.se/csig/1.0/eid2-dss/profile";
+    public static final String PROTOCOL_BINDING = "POST/XML/1.0";
     public static final String EID2_PROTOCOL_VERSION = "1.0";
     public static final String SP_FOLDER_NAME = "SpServer";
     public static final String CS_FOLDER_NAME = "SigServer";
