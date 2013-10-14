@@ -160,7 +160,7 @@ contain one saml:Audience element, specifying the return URL for any
 resulting Sign Response message.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element ref="eid2:Signer"/>
+            <xs:element ref="eid2:Signer" minOccurs="0"/>
             <xs:element ref="eid2:IdentityProvider"/>
             <xs:element ref="eid2:SignRequester"/>
             <xs:element ref="eid2:SignService"/>

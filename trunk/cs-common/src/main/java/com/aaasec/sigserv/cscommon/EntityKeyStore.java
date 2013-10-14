@@ -36,6 +36,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,8 +178,14 @@ public class EntityKeyStore {
         BigInteger certSerial = BigInteger.valueOf(System.currentTimeMillis());
         X500Name issuerDN = new X500Name("CN=" + subject);
         X500Name subjectDN = new X500Name("CN=" + subject);
-        Date notBefore = new Date(System.currentTimeMillis() - 10000);
-        Date notAfter = new Date(System.currentTimeMillis() + 10000);
+        Calendar startTime = Calendar.getInstance();
+        startTime.setTime(new Date());
+        startTime.add(Calendar.HOUR, -2);
+        Calendar expiryTime = Calendar.getInstance();
+        expiryTime.setTime(new Date());
+        expiryTime.add(Calendar.YEAR, 10);
+        Date notBefore = startTime.getTime();
+        Date notAfter = expiryTime.getTime();
         PublicKey pubKey = (pair.getPublic());
         X509v1CertificateBuilder certGen = new JcaX509v1CertificateBuilder(issuerDN, certSerial, notBefore, notAfter, subjectDN, pubKey);
 
