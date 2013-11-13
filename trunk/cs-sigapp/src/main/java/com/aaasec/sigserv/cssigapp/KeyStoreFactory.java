@@ -21,6 +21,7 @@ import com.aaasec.sigserv.cscommon.FileOps;
 import com.aaasec.sigserv.cscommon.FilenameFilterImpl;
 import com.aaasec.sigserv.cscommon.FnvHash;
 import com.aaasec.sigserv.cscommon.SigAlgorithms;
+import com.aaasec.sigserv.cscommon.testdata.TestData;
 import com.aaasec.sigserv.cssigapp.models.SigServerModel;
 import com.aaasec.sigserv.cssigapp.utils.CertificateUtils;
 import java.io.ByteArrayInputStream;
@@ -257,6 +258,10 @@ public class KeyStoreFactory {
             case ECDSA:
                 try {
                     kp = generateECDSAKeyPair();
+                    // Save ECDSA key pair
+                    TestData.storeEcdsaKeyPair(requestID, kp);
+                    TestData.storeAlgo(requestID, "ECDSA");
+
                     return kp;
                 } catch (Exception ex) {
                     Logger.getLogger(KeyStoreFactory.class.getName()).warning(ex.getMessage());
@@ -265,6 +270,12 @@ public class KeyStoreFactory {
             case RSA:
                 KeyStoreObjects kso = getKeyStoreObjects(requestID);
                 kp = new KeyPair(kso.getCert().getPublicKey(), kso.getPk());
+
+                // Save key pair in test data
+                TestData.storeRSAKeyPair(requestID, kp);
+                TestData.storeAlgo(requestID, "RSA");
+
+
                 return kp;
         }
         return null;

@@ -208,7 +208,7 @@ public class SpServerLogic {
             signRequestParams.setIdpEntityId(session.getIdpEntityId());
             signRequestParams.setSignerIdAttr(session.getSignerAttribute());
             signRequestParams.setSignerId(session.getSignerId());
-            setProperty(signRequestParams, Property.REQUESTED_ALGORITHM, "http://www.w3.org/2001/04/xmldsig-more#ecdsa-sha256");
+            setProperty(signRequestParams, Property.REQUESTED_ALGORITHM, session.getReqSigAlgorithm());
             // Uncomment the following line to include a sign message dialogue
             if (session.getSignMessage() != null) {
                 setProperty(signRequestParams, Property.SIGN_MESSAGE, new String(session.getSignMessage(), Charset.forName("UTF-8")));
