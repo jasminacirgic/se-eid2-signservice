@@ -23,6 +23,7 @@ import com.aaasec.sigserv.cscommon.XhtmlForm;
 import com.aaasec.sigserv.cscommon.enums.Enums;
 import com.aaasec.sigserv.cscommon.marshaller.XmlBeansUtil;
 import com.aaasec.sigserv.cscommon.signature.SigVerifyResult;
+import com.aaasec.sigserv.cscommon.testdata.TestData;
 import com.aaasec.sigserv.cscommon.xmldsig.XMLSign;
 import com.aaasec.sigserv.cssigapp.data.DbSignTask;
 import com.aaasec.sigserv.cssigapp.data.DbTrustStore;
@@ -116,7 +117,7 @@ public class SigRequestHandler {
             id = sigReq.getRequestID();
             DbSignTask dbRecord = signDb.getDbRecord(id);
             if (dbRecord != null) {
-                reqResult = new ReqResult(Enums.ResponseCodeMajor.BadRequest, "", spUrl,"Replay of old request");
+                reqResult = new ReqResult(Enums.ResponseCodeMajor.BadRequest, "", spUrl, "Replay of old request");
                 setErrorResponse(reqResult, encSigReq);
                 return reqResult;
             }
@@ -241,6 +242,17 @@ public class SigRequestHandler {
     private void setErrorResponse(ReqResult reqRes, byte[] encSigReq) {
         SignResponseDocument responseDoc = SignResponseDocument.Factory.newInstance();
         SignResponse response = responseDoc.addNewSignResponse();
+        String protProfile = "http://id.elegnamnden.se/csig/1.0/eid2-dss/profile";
+        String reqId = "";
+        try {
+            SignRequestDocument reqDoc = SignRequestDocument.Factory.parse(new ByteArrayInputStream(encSigReq));
+            SignRequest signRequest = reqDoc.getSignRequest();
+            protProfile = signRequest.getProfile();
+            reqId = signRequest.getRequestID();
+        } catch (Exception ex) {
+        }
+        response.setProfile(protProfile);
+        response.setRequestID(reqId);
         Result result = response.addNewResult();
         InternationalStringType resultMess = result.addNewResultMessage();
         resultMess.setLang("en");
@@ -252,8 +264,13 @@ public class SigRequestHandler {
 
         byte[] responseXml = XmlBeansUtil.getStyledBytes(responseDoc);
         String errorResponseForm = XhtmlForm.getSignXhtmlForm(XhtmlForm.Type.SIG_RESPONSE_FORM,
-                reqRes.spUrl, responseXml, reqRes.id);
+                reqRes.spUrl, responseXml, reqId);
         reqRes.errorResponse = errorResponseForm;
+
+        // Store testData
+        TestData.storeXhtmlResponse(reqId, errorResponseForm);
+        TestData.storeResponse(reqId, responseXml);
+
     }
 
     /**

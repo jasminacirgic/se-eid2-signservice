@@ -26,6 +26,7 @@ import static com.aaasec.sigserv.cscommon.enums.SigDocumentType.PDF;
 import static com.aaasec.sigserv.cscommon.enums.SigDocumentType.XML;
 import com.aaasec.sigserv.cscommon.enums.SpsStatusGroup;
 import com.aaasec.sigserv.cscommon.enums.SpsStatus;
+import com.aaasec.sigserv.cscommon.testdata.TestData;
 import com.aaasec.sigserv.csspapp.SignSupportAPI;
 import com.aaasec.sigserv.csspapp.models.IdAttribute;
 import com.aaasec.sigserv.csspapp.models.ServiceStatus;
@@ -202,75 +203,6 @@ public class SpSupportWs {
 
     }
 
-//    private SignRequestXhtml getTestCaseReqXhtml(SignRequestParams srp, String testCase) {
-//        SupportConfig conf = SpSuppContextParams.getConf();
-//        String sigTempDir = SpSuppContextParams.getSigTempDir();
-//        Map<String, SignSession> signTaskMap = SpSuppContextParams.getSignTaskMap();
-//        List<SignTaskParams> sigTaskRequests = srp.getSigTaskParams();
-//
-//        // Get test case reference
-//        Map<String, String> extension = srp.getExtension();
-//        String ref = "";
-//        if (extension.containsKey("testcaseRef")) {
-//            ref = extension.get("testcaseRef");
-//        }
-//
-//        SignTaskParams stp = sigTaskRequests.get(0);
-//        Map<SignRequestParams.Property, String> optionalProperties = srp.getOptionalProperties();
-//
-//        byte[] docBytes = stp.getTbsDocument();
-//        byte[] signMessBytes = getSigReqProperty(SignRequestParams.Property.signMessage, optionalProperties).getBytes(Charset.forName("UTF-8"));
-//        cleanupSignTasks();
-//
-//        SignSession signTask = SigSessionFactory.getSigSessionTask(docBytes, sigTempDir);
-//        if (signTask == null) {
-//            return getReqStatusResponse(SpsStatusGroup.SigRequest, SpsStatus.illegalDocType);
-//        }
-//        signTask.setDocument(docBytes);
-//        signTask.setSignerAttribute(srp.getSignerIdAttr());
-//        signTask.setSignerId(srp.getSignerId());
-//        signTask.setIdpEntityId(srp.getIdpEntityId());
-//        String providedReturnUrl = getSigReqProperty(SignRequestParams.Property.returnUrl, optionalProperties);
-//        String returnUrl = conf.getSpServiceReturnUrl();
-//        if (providedReturnUrl.length() > 6) {
-//            returnUrl = providedReturnUrl;
-//        }
-//        signTask.setReturnUrl(returnUrl);
-//        signTask.setSpEntityId(getSigReqProperty(SignRequestParams.Property.spEntityId, optionalProperties));
-//        signTask.setSignMessage(signMessBytes);
-//        signTask.setReqSigAlgorithm(getSigReqProperty(SignRequestParams.Property.requestedAlgorithm, optionalProperties));
-//        signTask.setLastUsed(System.currentTimeMillis());
-//
-//        if (testCase.equalsIgnoreCase("replay")) {
-//            if (!signTaskMap.containsKey(ref)) {
-//                return getReqStatusResponse(SpsStatusGroup.SigRequest, SpsStatus.noSignTask);
-//            }
-//            SignSession referenceTask = signTaskMap.get(ref);
-//            signTask.setSignRequestID(referenceTask.getSignRequestID());
-//        }
-//        if (testCase.equalsIgnoreCase("resign")) {
-//            if (signTaskMap.containsKey(ref)) {
-//                switch (signTask.getDocumentType()) {
-//                    case XML:
-//                        signTask.setDocument(signTaskMap.get(ref).getSignedDoc());
-//                        break;
-//                    case PDF:
-//                        signTask.setDocument(signTaskMap.get(ref).getSigFile());
-//                }
-//            }
-//        }
-//
-//        String signRedirect = testCaseRedirect(signTask, testCase);
-//
-//        if (signRedirect == null) {
-//            return getReqStatusResponse(SpsStatusGroup.SigRequest, SpsStatus.ReqGenError);
-//        }
-//
-//        SignRequestXhtml sigReqXhtml = getReqStatusResponse(SpsStatusGroup.Generic, SpsStatus.OK);
-//        sigReqXhtml.setSignRequestXhtml(signRedirect.getBytes(Charset.forName("UTF-8")));
-//
-//        return sigReqXhtml;
-//    }
     private SignatureResult getSignatureResult(byte[] signResponse) {
         Map<String, SignSession> signTaskMap = SpSuppContextParams.getSignTaskMap();
         SupportModel model = SpSuppContextParams.getModel();
@@ -300,6 +232,10 @@ public class SpSupportWs {
                     stResult.setSignedDoc(FileOps.readBinaryFile(session.getSigFile()));
                 }
                 stResult.setStatus(getStatus(SpsStatusGroup.Generic, SpsStatus.OK));
+
+                // Store signed doc testData
+                TestData.storeSignedDoc(status.signTaskID, stResult.getSignedDoc());
+
             } else {
                 // There was no matching sign task
                 sigResult.setStatus(getStatus(SpsStatusGroup.Generic, SpsStatus.FailedSigCompletion));
@@ -345,11 +281,21 @@ public class SpSupportWs {
         } catch (Exception ex) {
         }
 
-        return XhtmlForm.getSignXhtmlForm(
+        String xhtml = XhtmlForm.getSignXhtmlForm(
                 XhtmlForm.Type.SIG_REQUEST_FORM,
                 csServiceUrl,
                 sigRequest,
                 nonce);
+
+        // Testdata store XHTML form
+        TestData.storeXhtmlRequest(nonce, xhtml);
+        // Testdata store sig request
+        TestData.storeSigRequest(nonce, sigRequest);
+        // Store doc tbs
+        TestData.storeDocTbs(nonce, signTask.getDocument());
+
+
+        return xhtml;
     }
 
     private String testCaseRedirect(SignSession signTask, String testcase) {
@@ -371,11 +317,19 @@ public class SpSupportWs {
             signTaskMap.put(nonce, signTask);
         }
 
-        return XhtmlForm.getSignXhtmlForm(
+        String xhtml = XhtmlForm.getSignXhtmlForm(
                 XhtmlForm.Type.SIG_REQUEST_FORM,
                 csServiceUrl,
                 sigRequest,
                 nonce);
+
+        // Testdata store XHTML form
+        TestData.storeXhtmlRequest(nonce, xhtml);
+        // Testdata store sig request
+        TestData.storeSigRequest(nonce, sigRequest);
+        // Store doc tbs
+        TestData.storeDocTbs(nonce, signTask.getDocument());
+        return xhtml;
     }
 
     private void cleanupSignTasks() {

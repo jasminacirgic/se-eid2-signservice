@@ -25,6 +25,7 @@ import com.aaasec.sigserv.cscommon.data.AuthData;
 import com.aaasec.sigserv.cscommon.enums.Enums;
 import com.aaasec.sigserv.cscommon.enums.Enums.ResponseCodeMajor;
 import com.aaasec.sigserv.cscommon.marshaller.XmlBeansUtil;
+import com.aaasec.sigserv.cscommon.testdata.TestData;
 import com.aaasec.sigserv.cscommon.xmldsig.EcdsaSigValue;
 import com.aaasec.sigserv.cscommon.xmldsig.XMLSign;
 import com.aaasec.sigserv.cssigapp.ca.CAFactory;
@@ -129,7 +130,13 @@ public class SignatureCreationHandler implements Constants {
             Node sigParent = getResponseSignatureParent(responseDoc);
             byte[] unsignedXml = XmlBeansUtil.getStyledBytes(responseDoc);
             byte[] signedResponse = ca.signResponse(unsignedXml, sigParent);
-            return XhtmlForm.getSignXhtmlForm(XhtmlForm.Type.SIG_RESPONSE_FORM, responseUrl, signedResponse, nonce);
+            String xhtml = XhtmlForm.getSignXhtmlForm(XhtmlForm.Type.SIG_RESPONSE_FORM, responseUrl, signedResponse, nonce);
+            
+            //Store testdata
+            TestData.storeXhtmlResponse(nonce, xhtml);
+            TestData.storeResponse(nonce,signedResponse);
+            
+            return xhtml;
         } catch (Exception ex) {
         }
         return "Signature service error - Unable to service the request";
@@ -210,6 +217,10 @@ public class SignatureCreationHandler implements Constants {
 
             //Issue signing cert
             X509Certificate userCert = ca.issueUserCert(user, kp.getPublic(), eid2Req.getCertRequestProperties());
+            
+            //Store cert TestData
+            TestData.storeUserCert(sigReq.getRequestID(), userCert.getEncoded());
+            
             if (userCert == null) {
                 reqRes.setReponseDoc(getErrorResponse(encSigReq, sigReq, ResponseCodeMajor.SigCreationError, "Failed to issue signer certificate"));
                 LOG.warning("Certificate issueance prohibited due to unsatisfied attribute requirements");
@@ -345,6 +356,10 @@ public class SignatureCreationHandler implements Constants {
         SignerAssertionInfoType signerAssertionInfo = eid2Response.getSignerAssertionInfo();
         List<byte[]> assertions = user.getAssertions();
         if (!assertions.isEmpty()) {
+            
+            //Store Assertion in TestData
+            TestData.storeAssertions(sigReq.getRequestID(), assertions);
+            
             SAMLAssertionsType SamlAssertions = signerAssertionInfo.addNewSamlAssertions();
             byte[][] assertionArray = assertions.toArray(new byte[][]{});
             SamlAssertions.setAssertionArray(assertionArray);
